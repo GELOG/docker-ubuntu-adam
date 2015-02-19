@@ -1,5 +1,5 @@
 # For building this image, See https://github.com/GELOG/docker-ubuntu-spark
-FROM spark:1.1.0-bin-hadoop2.3
+FROM gelog/docker-ubuntu-spark:1.1.0-bin-hadoop2.3
 
 # Installation instructions: https://github.com/bigdatagenomics/adam/releases
 
