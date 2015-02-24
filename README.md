@@ -25,6 +25,20 @@ https://docs.docker.com/terms/layer/
 * Docker image of [gelog/spark:1.1.0-bin-hadoop2.3](https://registry.hub.docker.com/u/gelog/spark/)
 
 # How to use this image?
+### 1) Get the aligned file of a genome (or chromosome) 
+#### 1.1) Get it from [Snap](https://github.com/GELOG/docker-ubuntu-snap)
+#### 1.2) Download it from an external source (Warning: This file is 14.5 GB)
+```
+mkdir /docker-volume/
+wget -O /docker-volume/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data/HG00096/alignment/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam
+```
+### 2) Transform the genome (or chromosome) with Adam
+#### 2.1) From [Snap](https://github.com/GELOG/docker-ubuntu-snap)
+```
+docker run --rm=true -ti -v /docker-volume/:/docker-volume gelog/adam adam-submit transform /docker-volume/SRR062634.sam /docker-volume/SRR062634.adam
+```
+#### 2.2) From an external source
+```
+docker run --rm=true -ti -v /docker-volume/:/docker-volume gelog/adam adam-submit transform /docker-volume/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam /docker-volume/HG00096.adam
 ```
 
-```
