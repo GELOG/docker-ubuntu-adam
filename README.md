@@ -15,7 +15,7 @@ In Docker terminology, a read-only Layer is called an image. An image never chan
 
 https://docs.docker.com/terms/image/
 
-## what is a Docker Layer?
+## What is a Docker Layer?
 When Docker mounts the rootfs, it starts read-only, as in a traditional Linux boot, but then, instead of changing the file system to read-write mode, it takes advantage of a union mount to add a read-write file system over the read-only file system. In fact there may be multiple read-only file systems stacked on top of each other. We think of each one of these file systems as a layer.
 
 https://docs.docker.com/terms/layer/
