@@ -11,34 +11,31 @@ Docker is an open platform for developers and sysadmins to build, ship, and run 
 https://www.docker.com/whatisdocker/
 
 ## What is a Docker Image?
-In Docker terminology, a read-only Layer is called an image. An image never changes.
+Docker images are the basis of containers. Images are read-only, while containers are writeable. Only the containers can be executed by the operating system.
 
 https://docs.docker.com/terms/image/
 
-## What is a Docker Layer?
-When Docker mounts the rootfs, it starts read-only, as in a traditional Linux boot, but then, instead of changing the file system to read-write mode, it takes advantage of a union mount to add a read-write file system over the read-only file system. In fact there may be multiple read-only file systems stacked on top of each other. We think of each one of these file systems as a layer.
-
-https://docs.docker.com/terms/layer/
-
 # Dependencies
-* [Docker](https://docs.docker.com/installation/)
-* Docker image of [gelog/spark:1.1.0-bin-hadoop2.3](https://registry.hub.docker.com/u/gelog/spark/)
+* [Install Docker](https://docs.docker.com/installation/)
+
+# Base Docker image
+* [gelog/spark:1.1.0-bin-hadoop2.3](https://registry.hub.docker.com/u/gelog/spark/)
 
 # How to use this image?
 ### 1) Get the aligned file of a genome (or chromosome) 
 #### 1.1) Get it from [Snap](https://github.com/GELOG/docker-ubuntu-snap)
 #### 1.2) Download it from an external source (Warning: This file is 14.5 GB)
 ```
-mkdir /docker-volume/
-wget -O /docker-volume/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data/HG00096/alignment/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam
+mkdir /data/
+wget -O /data/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data/HG00096/alignment/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam
 ```
 ### 2) Transform the genome (or chromosome) with Adam
 #### 2.1) From [Snap](https://github.com/GELOG/docker-ubuntu-snap)
 ```
-docker run --rm=true -ti -v /docker-volume/:/docker-volume gelog/adam adam-submit transform /docker-volume/SRR062634.sam /docker-volume/SRR062634.adam
+docker run --rm=true -ti -v /data/:/data gelog/adam adam-submit transform /data/SRR062634.sam /data/SRR062634.adam
 ```
 #### 2.2) From an external source
 ```
-docker run --rm=true -ti -v /docker-volume/:/docker-volume gelog/adam adam-submit transform /docker-volume/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam /docker-volume/HG00096.adam
+docker run --rm=true -ti -v /data/:/data gelog/adam adam-submit transform /data/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam /data/HG00096.adam
 ```
 
