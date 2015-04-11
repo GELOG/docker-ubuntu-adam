@@ -1,5 +1,6 @@
 # Supported tags and respective `Dockerfile` links
-- [`0.14.0`/Dockerfile](https://github.com/GELOG/docker-ubuntu-adam/tree/0.14.0/Dockerfile)
+- [`0.15.0`/Dockerfile](https://github.com/GELOG/docker-ubuntu-adam/blob/master/0.15.0/Dockerfile)
+- [`0.14.0`/Dockerfile](https://github.com/GELOG/docker-ubuntu-adam/blob/master/0.14.0/Dockerfile)
  
 # What is Adam ?
 ADAM provides both an application programming interface (API) and a command line interface (CLI) for manipulating genomic data on a computing cluster. ADAM operates on data stored inside of [Parquet](http://www.parquet.io/) with the [bdg-formats](http://bdgenomics.org/projects/bdg-formats/) schemas, using [Apache Spark](http://spark.apache.org/), and provides scalable performance on clusters larger than 100 machines.
