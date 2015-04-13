@@ -25,6 +25,8 @@ RUN wget https://github.com/bigdatagenomics/adam/archive/adam-parent-$ADAM_VERSI
     ln -s /usr/local/adam-adam-parent-$ADAM_VERSION $ADAM_HOME && \
     rm /adam-parent-$ADAM_VERSION.tar.gz
 
+EXPOSE 4040
+
 # Updates the hadoop version in Adam's pom.xml file 
 # FIXME: Why does ADAM requires the Hadoop version to be specified, 
 #        if it is already specified in Spark's installation
