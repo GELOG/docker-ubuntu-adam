@@ -30,9 +30,17 @@ https://docs.docker.com/terms/image/
 #### 1.1) Get it from [Snap](https://github.com/GELOG/docker-ubuntu-snap)
 #### 1.2) Download it from an external source (Warning: This file is 14.5 GB)
     mkdir /data/
-    wget -O /data/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data/HG00096/alignment/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam
+    wget -O /data/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam \
+        ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data/HG00096/alignment/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam
 ### 2) Transform the genome (or chromosome) with Adam
 #### 2.1) From [Snap](https://github.com/GELOG/docker-ubuntu-snap)
-    docker run --rm=true -ti -v /data/:/data gelog/adam adam-submit transform /data/SRR062634.sam /data/SRR062634.adam
+    docker run --rm=true -ti -v /data/:/data gelog/adam \
+        adam-submit transform \
+        /data/SRR062634.sam \
+        /data/SRR062634.adam
 #### 2.2) From an external source
-    docker run --rm=true -ti -v /data/:/data gelog/adam adam-submit transform /data/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam /data/HG00096.adam
+    docker run --rm=true -ti -v /data/:/data gelog/adam \
+        adam-submit transform \
+        /data/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam \
+        /data/HG00096.adam
+
