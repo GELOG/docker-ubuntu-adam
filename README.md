@@ -26,21 +26,39 @@ https://docs.docker.com/terms/image/
 * [gelog/spark:1.1.0-bin-hadoop2.3](https://registry.hub.docker.com/u/gelog/spark/)
 
 # How to use this image?
-### 1) Get the aligned file of a genome (or chromosome) 
-#### 1.1) Get it from [Snap](https://github.com/GELOG/docker-ubuntu-snap)
-#### 1.2) Download it from an external source (Warning: This file is 14.5 GB)
-    mkdir /data/
-    wget -O /data/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam \
-        ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data/HG00096/alignment/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam
-### 2) Transform the genome (or chromosome) with Adam
-#### 2.1) From [Snap](https://github.com/GELOG/docker-ubuntu-snap)
-    docker run --rm=true -ti -v /data/:/data gelog/adam \
-        adam-submit transform \
-        /data/SRR062634.sam \
-        /data/SRR062634.adam
-#### 2.2) From an external source
-    docker run --rm=true -ti -v /data/:/data gelog/adam \
-        adam-submit transform \
-        /data/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam \
-        /data/HG00096.adam
 
+### Converting a BAM / SAM file to the ADAM format
+
+1) (Optional step) Download a small SAM file, if you don't have one handy.
+```
+mkdir -p /data
+wget -O /data/small.sam \
+    https://raw.githubusercontent.com/bigdatagenomics/adam/master/adam-core/src/test/resources/small.sam
+```
+
+2) Convert to the ADAM format in a new Adam container
+```
+docker run --rm=true -ti -v /data/:/data gelog/adam \
+    adam-submit transform \
+    /data/small.sam \
+    /data/small.adam
+```
+
+# Known issues
+If there is not enough memory allocated to Adam / Spark, Adam may crash. By default, only 512MB is allocated to java processes. Here's a workaround to fix this issue
+
+Download a [larger BAM file](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data/HG00096/alignment/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam) and start a bash shell in an ADAM container:
+```bash
+$ wget -O /data/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam \
+    ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data/HG00096/alignment/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam
+$ docker run --rm -ti -v /Users/david/data:/data gelog/adam bash
+root@42c257dcfbcc:/# 
+```
+
+Once inside the container, run ADAM with 1.5GB of RAM (the `SPARK_DRIVER_MEMORY` and `SPARK_EXECUTOR_MEMORY` variables):
+```bash
+root@42c257dcfbcc:/# SPARK_DRIVER_MEMORY=1500m SPARK_EXECUTOR_MEMORY=1500m adam-submit transform /data/HG00096.chrom20.ILLUMINA.bwa.GBR.low_coverage.20120522.bam /data/hg00096.chrom20.adam
+root@42c257dcfbcc:/#
+```
+
+Please [contact us](https://gitter.im/GELOG/adamcloud) if you find a more elegant way to solve this issue.
