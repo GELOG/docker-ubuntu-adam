@@ -57,7 +57,10 @@ root@42c257dcfbcc:/#
 
 Once inside the container, run ADAM with 1.5GB of RAM (the `SPARK_DRIVER_MEMORY` and `SPARK_EXECUTOR_MEMORY` variables):
 ```bash
-root@42c257dcfbcc:/# SPARK_DRIVER_MEMORY=1500m SPARK_EXECUTOR_MEMORY=1500m adam-submit transform /data/HG00096.chrom20.ILLUMINA.bwa.GBR.low_coverage.20120522.bam /data/hg00096.chrom20.adam
+root@42c257dcfbcc:/# SPARK_DRIVER_MEMORY=1500m SPARK_EXECUTOR_MEMORY=1500m \
+    adam-submit transform \
+    /data/HG00096.chrom20.ILLUMINA.bwa.GBR.low_coverage.20120522.bam \
+    /data/hg00096.chrom20.adam
 root@42c257dcfbcc:/#
 ```
 
