@@ -26,7 +26,7 @@ RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/ap
 # ADAM
 ####################
 
-ENV ADAM_SCALA_VERSION	2.11
+ENV ADAM_SCALA_VERSION	2.10
 ENV ADAM_VERSION        $ADAM_SCALA_VERSION-0.17.1
 ENV ADAM_HOME           /usr/local/adam
 ENV PATH                $ADAM_HOME/bin:$PATH
