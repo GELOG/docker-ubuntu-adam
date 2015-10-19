@@ -37,7 +37,8 @@ RUN wget https://github.com/bigdatagenomics/adam/archive/adam-parent_$ADAM_VERSI
     rm   adam-parent_$ADAM_VERSION.tar.gz && \
     mv   adam-adam-parent_$ADAM_VERSION  $ADAM_HOME && \
     cd   $ADAM_HOME && \
-    mvn  clean package -DskipTests
+    mvn  clean package -DskipTests && \
+    adam-submit
 
 
 # FIXME: Investigate why Adam takes 11min to build
