@@ -7,7 +7,6 @@ FROM gelog/spark:1.2-bin-hadoop2.3
 # Dependencies
 ####################
 
-# Environment variables
 ENV MAVEN_VERSION       3.2.3
 ENV MAVEN_HOME          /usr/local/apache-maven
 ENV MAVEN_OPTS          -Xmx512m -XX:MaxPermSize=128m
@@ -16,10 +15,10 @@ ENV PATH                $MAVEN_HOME/bin:$PATH
 
 # Installing Maven
 RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz && \
-    tar -xzf /apache-maven-$MAVEN_VERSION-bin.tar.gz -C /usr/local/ && \
-    ln -s /usr/local/apache-maven-$MAVEN_VERSION $MAVEN_HOME && \
-    rm /apache-maven-$MAVEN_VERSION-bin.tar.gz
-# Verify Maven installation with: mvn -version
+    tar  -xzf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
+    rm   apache-maven-$MAVEN_VERSION-bin.tar.gz && \
+    mv   apache-maven-$MAVEN_VERSION  $MAVEN_HOME && \
+    mvn  -version
 
 
 
@@ -27,25 +26,26 @@ RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/ap
 # ADAM
 ####################
 
-ENV ADAM_VERSION        0.16.0
+ENV ADAM_SCALA_VERSION	2.11
+ENV ADAM_VERSION        $ADAM_SCALA_VERSION-0.17.1
 ENV ADAM_HOME           /usr/local/adam
 ENV PATH                $ADAM_HOME/bin:$PATH
 
 # Installing ADAM
-RUN wget https://github.com/bigdatagenomics/adam/archive/adam-parent-$ADAM_VERSION.tar.gz && \
-    tar -xzf /adam-parent-$ADAM_VERSION.tar.gz -C /usr/local/ && \
-    ln -s /usr/local/adam-adam-parent-$ADAM_VERSION $ADAM_HOME && \
-    rm /adam-parent-$ADAM_VERSION.tar.gz
+RUN wget https://github.com/bigdatagenomics/adam/archive/adam-parent_$ADAM_VERSION.tar.gz && \
+    tar  -xzf adam-parent_$ADAM_VERSION.tar.gz && \
+    rm   adam-parent_$ADAM_VERSION.tar.gz && \
+    mv   adam-adam-parent_$ADAM_VERSION  $ADAM_HOME
 
 # Updates the hadoop version in Adam's pom.xml file 
 # FIXME: Why does ADAM requires the Hadoop version to be specified, 
 #        if it is already specified in Spark's installation
-RUN ADAM_HADOOP_VERSION=2.3.0 && \
-    sed -i -e "s/\(<hadoop.version>\).*\(<\/hadoop.version>\)/\1$ADAM_HADOOP_VERSION\2/g" $ADAM_HOME/pom.xml
+#RUN ADAM_HADOOP_VERSION=2.3.0 && \
+#    sed -i -e "s/\(<hadoop.version>\).*\(<\/hadoop.version>\)/\1$ADAM_HADOOP_VERSION\2/g" $ADAM_HOME/pom.xml
 
 # FIXME: Investigate why Adam takes 11min to build
-RUN cd $ADAM_HOME && \
-    mvn clean package -DskipTests
+#RUN cd $ADAM_HOME && \
+#    mvn clean package -DskipTests
 
 # FIXME: the ADAM image takes 1.4 GB of virtual size (640 MB for Adam build)
 
@@ -61,9 +61,9 @@ RUN cd $ADAM_HOME && \
 # [...]
 
 
-EXPOSE 4040
+#EXPOSE 4040
 
 # Default action: prints Adam's options
 # See also: adam-submit, adam-shell, adam-pyspark 
-CMD ["adam-submit"]
+#CMD ["adam-submit"]
 
