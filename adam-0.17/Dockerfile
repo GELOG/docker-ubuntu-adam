@@ -35,18 +35,12 @@ ENV PATH                $ADAM_HOME/bin:$PATH
 RUN wget https://github.com/bigdatagenomics/adam/archive/adam-parent_$ADAM_VERSION.tar.gz && \
     tar  -xzf adam-parent_$ADAM_VERSION.tar.gz && \
     rm   adam-parent_$ADAM_VERSION.tar.gz && \
-    mv   adam-adam-parent_$ADAM_VERSION  $ADAM_HOME
+    mv   adam-adam-parent_$ADAM_VERSION  $ADAM_HOME && \
+    cd   $ADAM_HOME && \
+    mvn  clean package -DskipTests
 
-# Updates the hadoop version in Adam's pom.xml file 
-# FIXME: Why does ADAM requires the Hadoop version to be specified, 
-#        if it is already specified in Spark's installation
-#RUN ADAM_HADOOP_VERSION=2.3.0 && \
-#    sed -i -e "s/\(<hadoop.version>\).*\(<\/hadoop.version>\)/\1$ADAM_HADOOP_VERSION\2/g" $ADAM_HOME/pom.xml
 
 # FIXME: Investigate why Adam takes 11min to build
-#RUN cd $ADAM_HOME && \
-#    mvn clean package -DskipTests
-
 # FIXME: the ADAM image takes 1.4 GB of virtual size (640 MB for Adam build)
 
 # FIXME: Errors when building ADAM: 
@@ -61,9 +55,9 @@ RUN wget https://github.com/bigdatagenomics/adam/archive/adam-parent_$ADAM_VERSI
 # [...]
 
 
-#EXPOSE 4040
+EXPOSE 4040
 
 # Default action: prints Adam's options
 # See also: adam-submit, adam-shell, adam-pyspark 
-#CMD ["adam-submit"]
+CMD ["adam-submit"]
 
