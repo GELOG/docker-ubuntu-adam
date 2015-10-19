@@ -6,9 +6,11 @@
 
 
 ## Supported tags and respective `Dockerfile` links
-- [`0.14.0` _(adam-0.14/Dockerfile)_](https://github.com/GELOG/docker-ubuntu-adam/tree/v0.14.0/0.14/Dockerfile) based on [`gelog/spark:1.2-bin-hadoop2.3`](https://registry.hub.docker.com/u/gelog/adam/) image.
-- [`0.15.0`, `latest` _(adam-0.15/Dockerfile)_](https://github.com/GELOG/docker-ubuntu-adam/tree/v0.15.0/0.15/Dockerfile) based on [`gelog/spark:1.2-bin-hadoop2.3`](https://registry.hub.docker.com/u/gelog/adam/) image.
-- [`0.16.0` _(adam-0.16/Dockerfile)_](https://github.com/GELOG/docker-ubuntu-adam/tree/v0.16.0/adam-0.16/Dockerfile) based on [`gelog/spark:1.2-bin-hadoop2.3`](https://registry.hub.docker.com/u/gelog/adam/) image.
+- [`0.14.0` _(Dockerfile)_](https://github.com/GELOG/docker-ubuntu-adam/tree/v0.14.0/0.14.0/Dockerfile)
+- [`0.15.0` _(Dockerfile)_](https://github.com/GELOG/docker-ubuntu-adam/tree/v0.15.0/0.15.0/Dockerfile)
+- [`0.16.0` _(Dockerfile)_](https://github.com/GELOG/docker-ubuntu-adam/tree/v0.16.0/adam-0.16/Dockerfile)
+- [`0.17.1` _(Dockerfile)_](https://github.com/GELOG/docker-ubuntu-adam/tree/v0.17.1/adam-0.17/Dockerfile)
+- [`0.18.0`, `latest` _(Dockerfile)_](https://github.com/GELOG/docker-ubuntu-adam/tree/v0.18.0/adam-0.18/Dockerfile)
 
 
 ## What is Adam ?
