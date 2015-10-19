@@ -79,3 +79,11 @@ root@42c257dcfbcc:/#
 **[UPDATE: June 2nd 2015]:** The `adam-submit` script in Adam 0.16.0 now allocates 4 GB by default [see here](https://github.com/bigdatagenomics/adam/blob/master/bin/adam-submit#L89-L90). If you need more than 4GB, then we need to find a way to override this parameter when running the container. The adam-submit script accepts the `--conf spark.executor.memory="1g"` option, but it has no effect.
 
 Please [contact us](https://gitter.im/GELOG/adamcloud) if you find a more elegant way to solve this issue.
+
+
+
+### Docker Image Hierarchy
+
+- gelog/**adam**:0.16.0
+  - gelog/**spark**:1.2-bin-hadoop2.3
+    - gelog/**java**:openjdk7
