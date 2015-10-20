@@ -53,35 +53,7 @@ docker run --rm=true -ti -v /data/:/data gelog/adam \
 
 
 ## Known issues
-
-### Memory allocation is hardcoded in `adam-submit` launch script
-If there is not enough memory allocated to Adam / Spark, Adam may crash. By default, only 512MB is allocated to java processes. Here's a workaround to fix this issue
-
-Download a [larger BAM file](ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data/HG00096/alignment/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam) and start a bash shell in an ADAM container:
-```bash
-$ wget -O /data/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam \
-    ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data/HG00096/alignment/HG00096.mapped.ILLUMINA.bwa.GBR.low_coverage.20120522.bam
-```
-
-Then, start an ADAM container:
-```bash
-$ docker run --rm -ti -v $HOME/data:/data gelog/adam bash
-root@42c257dcfbcc:/# 
-```
-
-Once inside the container, run ADAM with 1.5GB of RAM (the `SPARK_DRIVER_MEMORY` and `SPARK_EXECUTOR_MEMORY` variables):
-```bash
-root@42c257dcfbcc:/# SPARK_DRIVER_MEMORY=1500m SPARK_EXECUTOR_MEMORY=1500m \
-    adam-submit transform \
-    /data/HG00096.chrom20.ILLUMINA.bwa.GBR.low_coverage.20120522.bam \
-    /data/hg00096.chrom20.adam
-root@42c257dcfbcc:/#
-```
-
-**[UPDATE: June 2nd 2015]:** The `adam-submit` script in Adam 0.16.0 now allocates 4 GB by default [see here](https://github.com/bigdatagenomics/adam/blob/master/bin/adam-submit#L89-L90). If you need more than 4GB, then we need to find a way to override this parameter when running the container. The adam-submit script accepts the `--conf spark.executor.memory="1g"` option, but it has no effect.
-
-Please [contact us](https://gitter.im/GELOG/adamcloud) if you find a more elegant way to solve this issue.
-
+https://github.com/GELOG/docker-ubuntu-adam/issues
 
 
 ### Docker Image Hierarchy
