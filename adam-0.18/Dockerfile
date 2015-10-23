@@ -1,18 +1,27 @@
-# For building this image, See https://github.com/GELOG/docker-ubuntu-spark
-# Installation instructions: https://github.com/bigdatagenomics/adam/releases
-FROM gelog/spark:1.2-bin-hadoop2.3
+FROM ubuntu:14.04
 
 
 ####################
-# Dependencies
+# JAVA
+####################
+
+ENV JAVA_VERSION	7u79
+ENV JAVA_HOME		/usr/lib/jvm/java-7-openjdk-amd64
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-7-jdk=$JAVA_VERSION\* wget && \
+    rm -rf /var/lib/apt/lists/*
+
+
+
+####################
+# Maven
 ####################
 
 ENV MAVEN_VERSION       3.2.3
 ENV MAVEN_HOME          /usr/local/apache-maven
 ENV MAVEN_OPTS          -Xmx512m -XX:MaxPermSize=128m
 ENV PATH                $MAVEN_HOME/bin:$PATH
-
-
 # Installing Maven
 RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz && \
     tar  -xzf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
@@ -25,6 +34,7 @@ RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/ap
 ####################
 # ADAM
 ####################
+# Installation instructions: https://github.com/bigdatagenomics/adam/releases
 
 ENV ADAM_SCALA_VERSION	2.10
 ENV ADAM_VERSION        ${ADAM_SCALA_VERSION}_0.18.0
