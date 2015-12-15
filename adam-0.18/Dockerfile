@@ -5,11 +5,11 @@ FROM ubuntu:14.04
 # JAVA
 ####################
 
-ENV JAVA_VERSION	7u79
+ENV JAVA_VERSION	7
 ENV JAVA_HOME		/usr/lib/jvm/java-7-openjdk-amd64
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-7-jdk=$JAVA_VERSION\* wget && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-$JAVA_VERSION-jdk wget && \
     rm -rf /var/lib/apt/lists/*
 
 
@@ -22,12 +22,28 @@ ENV MAVEN_VERSION       3.2.3
 ENV MAVEN_HOME          /usr/local/apache-maven
 ENV MAVEN_OPTS          -Xmx512m -XX:MaxPermSize=128m
 ENV PATH                $MAVEN_HOME/bin:$PATH
+
 # Installing Maven
 RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz && \
     tar  -xzf apache-maven-$MAVEN_VERSION-bin.tar.gz && \
     rm   apache-maven-$MAVEN_VERSION-bin.tar.gz && \
     mv   apache-maven-$MAVEN_VERSION  $MAVEN_HOME && \
     mvn  -version
+
+
+
+####################
+# Spark
+####################
+ENV SPARK_VERSION      1.4.1
+ENV SPARK_BIN_VERSION  $SPARK_VERSION-bin-hadoop2.3
+ENV SPARK_HOME         /usr/local/spark
+ENV PATH               $PATH:$SPARK_HOME/bin
+
+RUN wget http://d3kbcqa49mib13.cloudfront.net/spark-$SPARK_BIN_VERSION.tgz  && \
+    tar  -xzf spark-$SPARK_BIN_VERSION.tgz  && \
+    rm   spark-$SPARK_BIN_VERSION.tgz  && \
+    mv   spark-$SPARK_BIN_VERSION $SPARK_HOME
 
 
 
@@ -39,7 +55,7 @@ RUN wget http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/ap
 ENV ADAM_SCALA_VERSION	2.10
 ENV ADAM_VERSION        ${ADAM_SCALA_VERSION}_0.18.0
 ENV ADAM_HOME           /usr/local/adam
-ENV PATH                $ADAM_HOME/bin:$PATH
+ENV PATH                $PATH:$ADAM_HOME/bin
 
 # Installing ADAM
 RUN wget https://github.com/bigdatagenomics/adam/archive/adam-parent-$ADAM_VERSION.tar.gz && \
