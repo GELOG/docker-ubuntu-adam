@@ -53,15 +53,15 @@ RUN wget http://d3kbcqa49mib13.cloudfront.net/spark-$SPARK_BIN_VERSION.tgz  && \
 # Installation instructions: https://github.com/bigdatagenomics/adam/releases
 
 ENV ADAM_SCALA_VERSION	2.10
-ENV ADAM_VERSION        ${ADAM_SCALA_VERSION}_0.18.0
+ENV ADAM_VERSION        ${ADAM_SCALA_VERSION}-0.18.2
 ENV ADAM_HOME           /usr/local/adam
 ENV PATH                $PATH:$ADAM_HOME/bin
 
 # Installing ADAM
-RUN wget https://github.com/bigdatagenomics/adam/archive/adam-parent-$ADAM_VERSION.tar.gz && \
-    tar  -xzf adam-parent-$ADAM_VERSION.tar.gz && \
-    rm   adam-parent-$ADAM_VERSION.tar.gz && \
-    mv   adam-adam-parent-$ADAM_VERSION  $ADAM_HOME && \
+RUN wget https://github.com/bigdatagenomics/adam/archive/adam-parent_$ADAM_VERSION.tar.gz && \
+    tar  -xzf adam-parent_$ADAM_VERSION.tar.gz && \
+    rm   adam-parent_$ADAM_VERSION.tar.gz && \
+    mv   adam-adam-parent_$ADAM_VERSION  $ADAM_HOME && \
     cd   $ADAM_HOME && \
     mvn  clean package -DskipTests && \
     adam-submit
